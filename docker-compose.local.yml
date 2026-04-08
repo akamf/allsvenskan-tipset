@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: allsvenskan-tipset-postgres
+    ports:
+      - "54329:5432"
+    environment:
+      POSTGRES_DB: allsvenskan_tipset
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d allsvenskan_tipset"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - allsvenskan-tipset-postgres-data:/var/lib/postgresql/data
+
+volumes:
+  allsvenskan-tipset-postgres-data:
