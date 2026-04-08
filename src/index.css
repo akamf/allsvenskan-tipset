@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 42 34% 92%;
+    --foreground: 128 20% 16%;
+    --card: 108 18% 33%;
+    --card-foreground: 40 40% 93%;
+    --popover: 42 34% 94%;
+    --popover-foreground: 128 20% 16%;
+    --primary: 102 24% 34%;
+    --primary-foreground: 40 40% 93%;
+    --secondary: 36 26% 78%;
+    --secondary-foreground: 128 20% 16%;
+    --muted: 95 14% 45%;
+    --muted-foreground: 42 18% 78%;
+    --accent: 31 28% 42%;
+    --accent-foreground: 40 40% 93%;
+    --destructive: 0 60% 47%;
+    --destructive-foreground: 40 40% 93%;
+    --border: 32 20% 48%;
+    --input: 32 20% 48%;
+    --ring: 31 28% 42%;
+    --radius: 1rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    background-image:
+      radial-gradient(circle at top left, rgba(124, 146, 99, 0.12), transparent 35%),
+      linear-gradient(180deg, #f4eee2 0%, #efe7d8 100%);
+  }
+
+  a {
+    @apply text-inherit no-underline;
+  }
+}

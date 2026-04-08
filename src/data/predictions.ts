@@ -1,0 +1,138 @@
+import { z } from 'zod'
+import { CANONICAL_TEAMS } from '../../server/constants'
+
+const canonicalTeamSchema = z.enum(CANONICAL_TEAMS)
+
+const predictionSchema = z.object({
+  participantId: z.string(),
+  participantName: z.string(),
+  predictedTopScorer: z.string(),
+  rows: z.array(
+    z.object({
+      teamName: canonicalTeamSchema,
+      predictedPosition: z.number().int().min(1).max(16),
+    }),
+  ).length(16),
+})
+
+export const predictions = [
+  {
+    participantId: 'simon',
+    participantName: 'Simon',
+    predictedTopScorer: 'Abraham',
+    rows: [
+      { teamName: 'Hammarby', predictedPosition: 1 },
+      { teamName: 'Djurgården', predictedPosition: 2 },
+      { teamName: 'Mjällby', predictedPosition: 3 },
+      { teamName: 'Malmö FF', predictedPosition: 4 },
+      { teamName: 'IFK Göteborg', predictedPosition: 5 },
+      { teamName: 'AIK', predictedPosition: 6 },
+      { teamName: 'Elfsborg', predictedPosition: 7 },
+      { teamName: 'GAIS', predictedPosition: 8 },
+      { teamName: 'Sirius', predictedPosition: 9 },
+      { teamName: 'Häcken', predictedPosition: 10 },
+      { teamName: 'Västerås', predictedPosition: 11 },
+      { teamName: 'Brommapojkarna', predictedPosition: 12 },
+      { teamName: 'Halmstad', predictedPosition: 13 },
+      { teamName: 'Kalmar FF', predictedPosition: 14 },
+      { teamName: 'Örgryte', predictedPosition: 15 },
+      { teamName: 'Degerfors', predictedPosition: 16 },
+    ],
+  },
+  {
+    participantId: 'fredrik',
+    participantName: 'Fredrik',
+    predictedTopScorer: 'Besara',
+    rows: [
+      { teamName: 'Hammarby', predictedPosition: 1 },
+      { teamName: 'Mjällby', predictedPosition: 2 },
+      { teamName: 'Djurgården', predictedPosition: 3 },
+      { teamName: 'IFK Göteborg', predictedPosition: 4 },
+      { teamName: 'Malmö FF', predictedPosition: 5 },
+      { teamName: 'GAIS', predictedPosition: 6 },
+      { teamName: 'AIK', predictedPosition: 7 },
+      { teamName: 'Sirius', predictedPosition: 8 },
+      { teamName: 'Elfsborg', predictedPosition: 9 },
+      { teamName: 'Häcken', predictedPosition: 10 },
+      { teamName: 'Brommapojkarna', predictedPosition: 11 },
+      { teamName: 'Kalmar FF', predictedPosition: 12 },
+      { teamName: 'Halmstad', predictedPosition: 13 },
+      { teamName: 'Degerfors', predictedPosition: 14 },
+      { teamName: 'Örgryte', predictedPosition: 15 },
+      { teamName: 'Västerås', predictedPosition: 16 },
+    ],
+  },
+  {
+    participantId: 'andreas',
+    participantName: 'Andreas',
+    predictedTopScorer: 'Lien',
+    rows: [
+      { teamName: 'Mjällby', predictedPosition: 1 },
+      { teamName: 'Hammarby', predictedPosition: 2 },
+      { teamName: 'Djurgården', predictedPosition: 3 },
+      { teamName: 'GAIS', predictedPosition: 4 },
+      { teamName: 'Malmö FF', predictedPosition: 5 },
+      { teamName: 'IFK Göteborg', predictedPosition: 6 },
+      { teamName: 'Sirius', predictedPosition: 7 },
+      { teamName: 'AIK', predictedPosition: 8 },
+      { teamName: 'Häcken', predictedPosition: 9 },
+      { teamName: 'Elfsborg', predictedPosition: 10 },
+      { teamName: 'Halmstad', predictedPosition: 11 },
+      { teamName: 'Kalmar FF', predictedPosition: 12 },
+      { teamName: 'Degerfors', predictedPosition: 13 },
+      { teamName: 'Brommapojkarna', predictedPosition: 14 },
+      { teamName: 'Västerås', predictedPosition: 15 },
+      { teamName: 'Örgryte', predictedPosition: 16 },
+    ],
+  },
+  {
+    participantId: 'marcus',
+    participantName: 'Marcus',
+    predictedTopScorer: 'Besara',
+    rows: [
+      { teamName: 'Hammarby', predictedPosition: 1 },
+      { teamName: 'Mjällby', predictedPosition: 2 },
+      { teamName: 'Malmö FF', predictedPosition: 3 },
+      { teamName: 'Djurgården', predictedPosition: 4 },
+      { teamName: 'Häcken', predictedPosition: 5 },
+      { teamName: 'IFK Göteborg', predictedPosition: 6 },
+      { teamName: 'GAIS', predictedPosition: 7 },
+      { teamName: 'Elfsborg', predictedPosition: 8 },
+      { teamName: 'AIK', predictedPosition: 9 },
+      { teamName: 'Sirius', predictedPosition: 10 },
+      { teamName: 'Degerfors', predictedPosition: 11 },
+      { teamName: 'Brommapojkarna', predictedPosition: 12 },
+      { teamName: 'Halmstad', predictedPosition: 13 },
+      { teamName: 'Kalmar FF', predictedPosition: 14 },
+      { teamName: 'Västerås', predictedPosition: 15 },
+      { teamName: 'Örgryte', predictedPosition: 16 },
+    ],
+  },
+  {
+    participantId: 'jacob',
+    participantName: 'Jacob',
+    predictedTopScorer: 'Fenger',
+    rows: [
+      { teamName: 'Malmö FF', predictedPosition: 1 },
+      { teamName: 'Djurgården', predictedPosition: 2 },
+      { teamName: 'IFK Göteborg', predictedPosition: 3 },
+      { teamName: 'Mjällby', predictedPosition: 4 },
+      { teamName: 'Hammarby', predictedPosition: 5 },
+      { teamName: 'GAIS', predictedPosition: 6 },
+      { teamName: 'AIK', predictedPosition: 7 },
+      { teamName: 'Elfsborg', predictedPosition: 8 },
+      { teamName: 'Sirius', predictedPosition: 9 },
+      { teamName: 'Häcken', predictedPosition: 10 },
+      { teamName: 'Brommapojkarna', predictedPosition: 11 },
+      { teamName: 'Degerfors', predictedPosition: 12 },
+      { teamName: 'Kalmar FF', predictedPosition: 13 },
+      { teamName: 'Halmstad', predictedPosition: 14 },
+      { teamName: 'Västerås', predictedPosition: 15 },
+      { teamName: 'Örgryte', predictedPosition: 16 },
+    ],
+  },
+] as const satisfies ReadonlyArray<z.input<typeof predictionSchema>>
+
+export type StaticPrediction = z.infer<typeof predictionSchema>
+
+export const staticPredictions: StaticPrediction[] = predictions.map((prediction) => predictionSchema.parse(prediction))

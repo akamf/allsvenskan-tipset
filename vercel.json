@@ -1,0 +1,9 @@
+{
+  "outputDirectory": "dist",
+  "crons": [
+    {
+      "path": "/api/cron/sync-standings",
+      "schedule": "0 2 * * *"
+    }
+  ]
+}
