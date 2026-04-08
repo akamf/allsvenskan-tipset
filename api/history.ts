@@ -1,7 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { getEnv } from '../server/env'
-import { getHistoryData } from '../server/services/dashboard'
-import { assertMethod, handleError, json } from './_utils'
+import { getHistoryData } from '../server/services/dashboard.js'
+import { assertMethod, handleError, json } from './_utils.js'
 
 export default async function handler(request: VercelRequest, response: VercelResponse) {
   if (!assertMethod(request, response, ['GET'])) {
@@ -10,13 +9,12 @@ export default async function handler(request: VercelRequest, response: VercelRe
 
   try {
     console.info('[route:/api/history] route entered')
-    const env = getEnv()
     console.info('[route:/api/history] env presence', {
-      DATABASE_URL: Boolean(env.DATABASE_URL),
-      API_FOOTBALL_BASE_URL: Boolean(env.API_FOOTBALL_BASE_URL),
-      API_FOOTBALL_KEY: Boolean(env.API_FOOTBALL_KEY),
-      ALLSVENSKAN_SEASON: Boolean(env.ALLSVENSKAN_SEASON),
-      CRON_SECRET: Boolean(env.CRON_SECRET),
+      DATABASE_URL: Boolean(process.env.DATABASE_URL),
+      API_FOOTBALL_BASE_URL: Boolean(process.env.API_FOOTBALL_BASE_URL),
+      API_FOOTBALL_KEY: Boolean(process.env.API_FOOTBALL_KEY),
+      ALLSVENSKAN_SEASON: Boolean(process.env.ALLSVENSKAN_SEASON),
+      CRON_SECRET: Boolean(process.env.CRON_SECRET),
     })
     const data = await getHistoryData()
     console.info('[route:/api/history] final response success')

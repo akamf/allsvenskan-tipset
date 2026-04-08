@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { normalizeApiFootballTeamName } from './normalize-team-name'
+import { normalizeApiFootballTeamName } from './normalize-team-name.js'
 
 export type TopScorerRow = {
   rank: number

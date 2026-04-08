@@ -1,5 +1,5 @@
-import { getSqlClient } from '../db/client'
-import { runNightlySync } from './sync'
+import { getSqlClient } from '../db/client.js'
+import { runNightlySync } from './sync.js'
 
 runNightlySync()
   .then(async (result) => {

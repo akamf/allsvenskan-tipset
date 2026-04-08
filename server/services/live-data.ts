@@ -1,7 +1,7 @@
-import type { LiveBundle } from '../api-football/provider'
-import { getLatestStandingsSnapshot, getLatestTopScorerSnapshot } from '../queries/snapshots'
-import { fetchLiveStandingsAndTopScorers } from '../api-football/provider'
-import { liveStandingRowSchema, normalizedStandingSchema, normalizedTopScorerSchema } from '../types'
+import type { LiveBundle } from '../api-football/provider.js'
+import { getLatestStandingsSnapshot, getLatestTopScorerSnapshot } from '../queries/snapshots.js'
+import { fetchLiveStandingsAndTopScorers } from '../api-football/provider.js'
+import { liveStandingRowSchema, normalizedStandingSchema, normalizedTopScorerSchema } from '../types.js'
 
 export type LiveBundleResult = {
   status: {

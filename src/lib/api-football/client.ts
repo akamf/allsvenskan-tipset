@@ -1,4 +1,4 @@
-import { getEnv } from '../../../server/env'
+import { getEnv } from '../../../server/env.js'
 
 export async function apiFootballGet(path: string, params: Record<string, string | number>) {
   const env = getEnv()

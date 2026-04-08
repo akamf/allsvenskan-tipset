@@ -20,12 +20,12 @@ export function TableRow({ className, ...props }: HTMLAttributes<HTMLTableRowEle
 export function TableHead({ className, ...props }: ThHTMLAttributes<HTMLTableCellElement>) {
   return (
     <th
-      className={cn('h-10 px-3 text-left align-middle text-xs font-medium uppercase tracking-wide text-muted-foreground', className)}
+      className={cn('h-9 px-3 py-2 text-left align-middle text-xs font-medium uppercase tracking-wide text-muted-foreground', className)}
       {...props}
     />
   )
 }
 
 export function TableCell({ className, ...props }: TdHTMLAttributes<HTMLTableCellElement>) {
-  return <td className={cn('p-3 align-middle', className)} {...props} />
+  return <td className={cn('px-3 py-2.5 align-middle', className)} {...props} />
 }

@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { z } from 'zod'
-import { getParticipantDetailData } from '../server/services/dashboard'
-import { assertMethod, handleError, json } from './_utils'
+import { getParticipantDetailData } from '../server/services/dashboard.js'
+import { assertMethod, handleError, json } from './_utils.js'
 
 const querySchema = z.object({
   id: z.string().min(1),

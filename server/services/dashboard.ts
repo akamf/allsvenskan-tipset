@@ -1,11 +1,11 @@
-import { APP_SEASON } from '../constants'
-import { getPredictionsForSeason } from '../queries/predictions'
-import { getAllSnapshotHistory, getLatestStandingsSnapshot } from '../queries/snapshots'
-import { computeLeaderboard } from '../scoring/leaderboard'
-import { getLiveBundleWithFallback } from './live-data'
-import type { NormalizedPrediction } from '../types'
-import type { ComputedParticipantScore } from '../scoring/leaderboard'
-import { findBestPlayerNameMatch } from '../../src/lib/player-name-match'
+import { APP_SEASON } from '../constants.js'
+import { getPredictionsForSeason } from '../queries/predictions.js'
+import { getAllSnapshotHistory, getLatestStandingsSnapshot } from '../queries/snapshots.js'
+import { computeLeaderboard } from '../scoring/leaderboard.js'
+import { getLiveBundleWithFallback } from './live-data.js'
+import type { NormalizedPrediction } from '../types.js'
+import type { ComputedParticipantScore } from '../scoring/leaderboard.js'
+import { findBestPlayerNameMatch } from '../../src/lib/player-name-match.js'
 
 const folderStructure = [
   'src/app, src/pages, src/components/ui for the Vite React client',

@@ -1,7 +1,5 @@
 import { z } from 'zod'
-import { APP_SEASON } from './constants'
-
-loadLocalEnv()
+import { APP_SEASON } from './constants.js'
 
 const databaseEnvSchema = z.object({
   DATABASE_URL: z.string().min(1),
@@ -46,12 +44,4 @@ export function getCronEnv() {
 export function getEnv() {
   cachedEnv ??= envSchema.parse(process.env)
   return cachedEnv
-}
-
-function loadLocalEnv() {
-  if (typeof process.loadEnvFile !== 'function') {
-    return
-  }
-
-  process.loadEnvFile()
 }

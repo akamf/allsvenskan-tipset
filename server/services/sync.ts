@@ -1,16 +1,16 @@
 import { and, eq } from 'drizzle-orm'
-import { APP_SEASON, LEAGUE_NAME } from '../constants'
-import { getDb } from '../db/client'
+import { APP_SEASON, LEAGUE_NAME } from '../constants.js'
+import { getDb } from '../db/client.js'
 import {
   participantScores,
   standingsSnapshotRows,
   standingsSnapshots,
   topScorerSnapshotRows,
   topScorerSnapshots,
-} from '../db/schema'
-import { getPredictionsForSeason } from '../queries/predictions'
-import { computeLeaderboard } from '../scoring/leaderboard'
-import { fetchLiveStandingsAndTopScorers } from '../api-football/provider'
+} from '../db/schema.js'
+import { getPredictionsForSeason } from '../queries/predictions.js'
+import { computeLeaderboard } from '../scoring/leaderboard.js'
+import { fetchLiveStandingsAndTopScorers } from '../api-football/provider.js'
 
 export async function runNightlySync() {
   const db = getDb()

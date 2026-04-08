@@ -1,10 +1,10 @@
-import { API_FOOTBALL_LEAGUE_ID } from '../constants'
-import { normalizeTeamName } from '../normalization/teams'
-import type { NormalizedStanding, NormalizedTopScorer } from '../types'
-import { getEnv } from '../env'
-import { apiFootballGet } from '../../src/lib/api-football/client'
-import { mapStandings } from '../../src/lib/api-football/map-standings'
-import { mapTopScorers } from '../../src/lib/api-football/map-topscorers'
+import { API_FOOTBALL_LEAGUE_ID } from '../constants.js'
+import { normalizeTeamName } from '../normalization/teams.js'
+import type { NormalizedStanding, NormalizedTopScorer } from '../types.js'
+import { getEnv } from '../env.js'
+import { apiFootballGet } from '../../src/lib/api-football/client.js'
+import { mapStandings } from '../../src/lib/api-football/map-standings.js'
+import { mapTopScorers } from '../../src/lib/api-football/map-topscorers.js'
 
 export async function fetchLiveStandingsAndTopScorers() {
   const env = getEnv()

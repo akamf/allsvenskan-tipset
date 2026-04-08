@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { runNightlySync } from '../../server/services/sync'
-import { assertMethod, handleError, json, requireCronSecret } from '../_utils'
+import { runNightlySync } from '../../server/services/sync.js'
+import { assertMethod, handleError, json, requireCronSecret } from '../_utils.js'
 
 export default async function handler(request: VercelRequest, response: VercelResponse) {
   if (!assertMethod(request, response, ['GET'])) {

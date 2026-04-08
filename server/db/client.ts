@@ -1,7 +1,7 @@
 import postgres from 'postgres'
 import { drizzle } from 'drizzle-orm/postgres-js'
-import { getDatabaseEnv } from '../env'
-import * as schema from './schema'
+import { getDatabaseEnv } from '../env.js'
+import * as schema from './schema.js'
 
 const globalDb = globalThis as typeof globalThis & {
   __allsvenskanTipsetSql?: postgres.Sql

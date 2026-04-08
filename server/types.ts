@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { CANONICAL_TEAMS } from './constants'
+import { CANONICAL_TEAMS } from './constants.js'
 
 export const canonicalTeamSchema = z.enum(CANONICAL_TEAMS)
 

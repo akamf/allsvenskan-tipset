@@ -6,5 +6,5 @@ const predictedScorerDisplayNames: Record<string, string> = {
 }
 
 export function toPredictedScorerDisplayName(name: string, liveMatchName?: string | null) {
-  return liveMatchName ?? predictedScorerDisplayNames[name] ?? name
+  return predictedScorerDisplayNames[name] ?? liveMatchName ?? name
 }

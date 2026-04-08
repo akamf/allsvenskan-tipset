@@ -1,7 +1,7 @@
-import { RELEGATION_POSITIONS } from '../constants'
-import type { NormalizedPrediction, NormalizedStanding, NormalizedTopScorer } from '../types'
-import { getPlayerMatchScore } from '../../src/lib/player-name-match'
-import { beerDebtFromRanking, scorePositionDistance } from './rules'
+import { RELEGATION_POSITIONS } from '../constants.js'
+import type { NormalizedPrediction, NormalizedStanding, NormalizedTopScorer } from '../types.js'
+import { getPlayerMatchScore } from '../../src/lib/player-name-match.js'
+import { beerDebtFromRanking, scorePositionDistance } from './rules.js'
 
 type TeamBreakdown = {
   teamName: string

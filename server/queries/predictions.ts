@@ -1,5 +1,5 @@
-import { staticPredictions } from '../../src/data/predictions'
-import { normalizedPredictionSchema, type NormalizedPrediction } from '../types'
+import { staticPredictions } from '../../src/data/predictions.js'
+import { normalizedPredictionSchema, type NormalizedPrediction } from '../types.js'
 
 export async function getPredictionsForSeason(): Promise<NormalizedPrediction[]> {
   return staticPredictions

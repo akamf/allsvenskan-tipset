@@ -1,5 +1,5 @@
-import { CANONICAL_TEAMS, type CanonicalTeamName } from '../constants'
-import { normalizeLooseString } from '../utils/text'
+import { CANONICAL_TEAMS, type CanonicalTeamName } from '../constants.js'
+import { normalizeLooseString } from '../utils/text.js'
 
 const aliases: Record<string, CanonicalTeamName> = {
   hammarby: 'Hammarby',

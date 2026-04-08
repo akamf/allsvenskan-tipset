@@ -185,11 +185,11 @@ function MetricCard({
 }) {
   return (
     <Card className="bg-[#607656]">
-      <CardContent className="flex min-h-[108px] items-center gap-4 p-5">
+      <CardContent className="flex min-h-[104px] items-center justify-start gap-4 px-5 py-4">
         <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#f6eee0]/10">
           <Icon className="h-5 w-5 text-[#f1e5d3]" />
         </div>
-        <div className="flex min-h-[52px] flex-col justify-center">
+        <div className="flex min-w-0 flex-col justify-center text-left">
           <p className="text-sm text-[#efe6d8]/70">{label}</p>
           <p className="font-display text-xl font-semibold text-white">{value}</p>
           <p className="text-xs text-[#efe6d8]/50">{hint}</p>
@@ -286,16 +286,16 @@ function LiveStandingsCard({
           <TableBody>
             {standings.map((row, index) => (
               <TableRow key={`${row.teamId ?? index}-${row.teamName}`}>
-                <TableCell>{row.position}</TableCell>
+                <TableCell className="w-8">{row.position}</TableCell>
                 <TableCell>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2.5">
                     {row.teamLogo ? (
                       <img alt="" className="h-6 w-6 rounded-full bg-white/5 object-contain" src={row.teamLogo} />
                     ) : (
                       <div className="h-6 w-6 rounded-full bg-[#f6eee0]/10" />
                     )}
                     <div>
-                      <div className="font-medium text-white">{toDisplayTeamName(row.teamName)}</div>
+                      <div className="font-medium leading-tight text-white">{toDisplayTeamName(row.teamName)}</div>
                       {row.description ? <div className="text-xs text-[#ede2cf]/55">{row.description}</div> : null}
                     </div>
                   </div>

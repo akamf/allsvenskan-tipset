@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import { getLiveBundleWithFallback } from '../server/services/live-data'
-import { assertMethod, handleError, json } from './_utils'
+import { getLiveBundleWithFallback } from '../server/services/live-data.js'
+import { assertMethod, handleError, json } from './_utils.js'
 
 export default async function handler(request: VercelRequest, response: VercelResponse) {
   if (!assertMethod(request, response, ['GET'])) {

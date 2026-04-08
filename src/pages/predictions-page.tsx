@@ -28,17 +28,17 @@ export function PredictionsPage() {
 
         return (
           <Card key={participant.participantId} className="bg-[#5e7453]">
-            <CardHeader className="pb-2">
+            <CardHeader className="gap-1 px-4 py-3">
               <div className="flex items-center justify-between gap-4">
-                <CardTitle>{participant.participantName}</CardTitle>
+                <CardTitle className="text-base">{participant.participantName}</CardTitle>
                 <Badge>{participant.rows[0]?.predictedPosition === 1 ? 'Title pick' : 'Prediction'}</Badge>
               </div>
-              <CardDescription>
+              <CardDescription className="text-[13px] leading-snug">
                 Predicted top scorer: {scorerDisplayName}
                 {liveMatch ? ` (${liveMatch.goals} goals)` : ''}
               </CardDescription>
             </CardHeader>
-            <CardContent className="pt-0">
+            <CardContent className="px-4 pb-4 pt-0">
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -49,8 +49,8 @@ export function PredictionsPage() {
                 <TableBody>
                   {participant.rows.map((row) => (
                     <TableRow key={`${participant.participantId}-${row.teamName}`}>
-                      <TableCell className="py-2">{row.predictedPosition}</TableCell>
-                      <TableCell>{toDisplayTeamName(row.teamName)}</TableCell>
+                      <TableCell className="w-8 py-1.5">{row.predictedPosition}</TableCell>
+                      <TableCell className="py-1.5">{toDisplayTeamName(row.teamName)}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

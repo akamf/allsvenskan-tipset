@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import postgres from 'postgres'
-import { getDatabaseEnv } from '../env'
+import { getDatabaseEnv } from '../env.js'
 
 async function initLocalDb() {
   const sqlFile = resolve(process.cwd(), 'drizzle/0000_initial.sql')

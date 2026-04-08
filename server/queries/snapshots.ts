@@ -1,13 +1,13 @@
 import { asc, eq } from 'drizzle-orm'
-import { APP_SEASON } from '../constants'
-import { getDb } from '../db/client'
+import { APP_SEASON } from '../constants.js'
+import { getDb } from '../db/client.js'
 import {
   participantScores,
   standingsSnapshotRows,
   standingsSnapshots,
   topScorerSnapshotRows,
   topScorerSnapshots,
-} from '../db/schema'
+} from '../db/schema.js'
 
 export async function getLatestStandingsSnapshot() {
   const db = getDb()
