@@ -5,4 +5,8 @@ export function assertLocalDatabaseUrl(databaseUrl: string, scriptName: string) 
   if (!localHosts.has(url.hostname)) {
     throw new Error(`${scriptName} refused to run against non-local database host: ${url.hostname}`)
   }
+
+  if (url.hostname.includes('supabase.co')) {
+    throw new Error(`${scriptName} refused to run against Supabase host: ${url.hostname}`)
+  }
 }

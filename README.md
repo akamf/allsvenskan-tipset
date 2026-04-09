@@ -15,48 +15,58 @@ Allsvenskan prediction app built with Vite, React, TypeScript, Tailwind, TanStac
 - Cron sync writes new snapshots and participant scores once per day
 - Frontend uses live API-backed server endpoints first and falls back to DB snapshots if live fetch fails
 
-## Environment
+## Environment files
 
 ```bash
-DATABASE_URL=
+.env.development
+.env.production
+.env.example
+```
+
+Development uses `.env.development` and must point at the local Docker database. Production uses Vercel environment variables with `APP_ENV=production`.
+The dev scripts use `dotenv-cli` override mode, so `.env.development` wins over any shell-level `DATABASE_URL` or `APP_ENV`.
+
+```bash
+APP_ENV=development
+DATABASE_URL=postgres://postgres:postgres@127.0.0.1:5433/allsvenskan_tipset
 API_FOOTBALL_BASE_URL=https://v3.football.api-sports.io
-API_FOOTBALL_KEY=
+API_FOOTBALL_KEY=development_placeholder_key
 ALLSVENSKAN_SEASON=2026
-CRON_SECRET=
+CRON_SECRET=development_cron_secret
 ```
 
 ## Setup
 
 ```bash
 npm install
-cp .env.example .env
-psql "$DATABASE_URL" -f drizzle/0000_initial.sql
-npm run dev:full
+npm run dev
 ```
 
-## Local Docker Postgres
+`npm run dev` now does all local setup automatically:
 
-Use this if you want local snapshot/history data without touching Supabase:
-
-```bash
-npm run db:docker:up
-npm run db:setup:docker
-```
-
-This starts a local Postgres container on `127.0.0.1:54329`, applies [drizzle/0000_initial.sql](/Users/akamf/code/personal/allsvenskan-tipset/drizzle/0000_initial.sql), and seeds local standings/top-scorer/history data into that container only. The local init/seed scripts refuse non-local database hosts.
+1. clears the local Docker volume so dev starts from a known-good state
+2. starts local Docker Postgres on `127.0.0.1:5433`
+3. waits until the DB accepts connections
+4. applies the local Drizzle-generated schema SQL
+5. seeds local standings/top-scorer/history data
+6. starts the Vercel API layer and Vite frontend
 
 Useful commands:
 
-- `npm run db:docker:up`
+- `npm run dev`
+- `npm run dev:db:up`
+- `npm run dev:db:reset`
+- `npm run dev:db:down`
+- `npm run db:migrate:dev`
+- `npm run db:seed:dev`
 - `npm run db:setup:docker`
-- `npm run db:seed:docker`
-- `npm run db:docker:down`
 
 Local commands:
 
-- `npm run dev` starts the Vite frontend only
-- `npm run dev:api` starts the Vercel API layer only
-- `npm run dev:full` starts both, with Vite proxying `/api` to the local Vercel server
+- `npm run dev` starts the full local stack safely
+- `npm run dev:api` starts the Vercel API layer with `.env.development` forced over shell env
+- `npm run dev:web` starts the Vite frontend
+- `npm run dev:full` starts both API and frontend after setup
 
 ## Important files
 
@@ -98,8 +108,12 @@ Flow:
 ```bash
 npm run dev
 npm run dev:api
+npm run dev:web
 npm run dev:full
-npm run dev:vite
+npm run dev:db:up
+npm run dev:db:down
+npm run db:migrate:dev
+npm run db:seed:dev
 npm run typecheck
 npm run test
 npm run build

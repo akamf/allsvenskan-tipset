@@ -1,9 +1,9 @@
 services:
   postgres:
-    image: postgres:16-alpine
+    image: postgres:16
     container_name: allsvenskan-tipset-postgres
     ports:
-      - "54329:5432"
+      - "5433:5432"
     environment:
       POSTGRES_DB: allsvenskan_tipset
       POSTGRES_USER: postgres
