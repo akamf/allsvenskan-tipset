@@ -25,7 +25,7 @@ export function AppShell() {
             </div>
             <div>
               <h1 className="font-display text-xl font-semibold tracking-[0.12em] text-[#293124] sm:text-2xl">
-                ALLSVENSKAN TIPSET 2026
+                ALLSVENSKAN BEER BET 2026
               </h1>
             </div>
           </div>
