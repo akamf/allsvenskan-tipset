@@ -1,5 +1,6 @@
 import { Activity, ChartNoAxesCombined, Copyright, ShieldHalf, ShieldPlus } from 'lucide-react'
 import { NavLink, Outlet } from 'react-router-dom'
+import logoUrl from '@/assets/logo.png'
 import { cn } from '@/lib/utils'
 
 const navigation = [
@@ -15,8 +16,12 @@ export function AppShell() {
       <div className="relative container py-6 sm:py-8">
         <header className="mb-8 flex flex-col gap-4 rounded-[28px] border border-[#826a4b]/25 bg-[#f6f0e4]/90 px-5 py-4 shadow-[0_16px_40px_rgba(120,101,69,0.08)] sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[#826a4b]/35 bg-[#5f7452] text-[#f7f0e4]">
-              <ShieldPlus className="h-6 w-6" />
+            <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-2xl border border-[#826a4b]/35 bg-[#f7f0e4]">
+              <img
+                alt="Allsvenskan Tipset logo"
+                className="h-full w-full object-contain p-1"
+                src={logoUrl}
+              />
             </div>
             <div>
               <h1 className="font-display text-xl font-semibold tracking-[0.12em] text-[#293124] sm:text-2xl">
