@@ -21,5 +21,5 @@ export function requireCronSecret(request: VercelRequest) {
 
 export function handleError(response: VercelResponse, error: unknown) {
   console.error(error)
-  return json(response, 500, { error: error instanceof Error ? error.message : 'Unexpected server error' })
+  return json(response, 500, { error: 'Internal server error' })
 }
