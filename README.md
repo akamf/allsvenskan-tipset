@@ -1,120 +1,76 @@
-# Allsvenskan Tipset
+<div align="center">
 
-Allsvenskan prediction app built with Vite, React, TypeScript, Tailwind, TanStack Query, Drizzle, Supabase Postgres, Recharts, Lucide, and Vercel serverless functions.
+# ⚽ Allsvenskan Tipset 2026
 
-## Final architecture
+**Four friends. Sixteen teams. One season. A whole lot of beer on the line.**
 
-- Predictions are static in [src/data/predictions.ts](/Users/akamf/code/personal/allsvenskan-tipset/src/data/predictions.ts)
-- API-FOOTBALL is the only live source
-- Database stores:
-  - `standings_snapshots`
-  - `standings_snapshot_rows`
-  - `top_scorer_snapshots`
-  - `top_scorer_snapshot_rows`
-  - `participant_scores`
-- Cron sync writes new snapshots and participant scores once per day
-- Frontend uses live API-backed server endpoints first and falls back to DB snapshots if live fetch fails
+[Open the app](https://allsvenskan-tipset.vercel.app)
 
-## Environment files
+</div>
 
-```bash
-.env.development
-.env.production
-.env.example
-```
+---
 
-Development uses `.env.development` and must point at the local Docker database. Production uses Vercel environment variables with `APP_ENV=production`.
-Local `.env` and `.env.local` files are not used and should not exist in the dev workflow.
-The dev scripts use `dotenv-cli` override mode, so `.env.development` wins over any shell-level `DATABASE_URL` or `APP_ENV`.
+## 🍻 The deal
 
-```bash
-APP_ENV=development
-DATABASE_URL=postgres://postgres:postgres@127.0.0.1:5433/allsvenskan_tipset
-API_FOOTBALL_BASE_URL=https://v3.football.api-sports.io
-API_FOOTBALL_KEY=development_placeholder_key
-ALLSVENSKAN_SEASON=2026
-CRON_SECRET=development_cron_secret
-```
+Before the 2026 Allsvenskan season started, **Simon**, **Fredrik**, **Andreas**, and **Marcus** sat down and each predicted the entire final league table — all 16 teams, top to bottom — plus who would become the season's top scorer.
 
-## Setup
+Now we wait. And watch. And trash-talk.
+
+This app keeps score automatically so nobody can cheat, lie, or conveniently "forget" what they predicted.
+
+---
+
+## 📊 How points work
+
+Every team in your prediction is compared to where they actually are in the league:
+
+- 🎯 **Nailed it** (exact position) → **3 points**
+- 🤏 **Close enough** (one off) → **1 point**
+- 😬 **Way off** → nothing, just shame
+
+Plus some juicy bonuses:
+
+- 🏆 **+5 points** if you correctly predict the champions
+- ⬇️ **+2 points** for each correctly predicted relegated team
+
+If two players are tied? Whoever got the top scorer prediction right wins the tiebreak.
+
+---
+
+## 🍺 The beer debt
+
+This is where it gets serious. When the season ends, your final ranking decides how many rounds you owe:
+
+- 🥇 **1st place** — You drink for free. Legend.
+- 🥈 **2nd place** — 1 round. Not bad.
+- 🥉 **3rd place** — 2 rounds. Starting to sting.
+- 💀 **Last place** — 3 rounds. Pain.
+
+---
+
+## 📱 What you'll find in the app
+
+- **Dashboard** — Who's winning right now, live standings, and trend charts that show the highs and lows
+- **Predictions** — The receipts. See exactly what everyone predicted before the season
+- **History** — Rewind round by round and relive the drama
+- **Rules** — For when someone inevitably disputes the scoring
+
+---
+
+## 🤓 Built with
+
+React, TypeScript, Vite, Tailwind CSS, and Vercel — powered by live data from API-FOOTBALL.
+
+<details>
+<summary>Developer setup</summary>
 
 ```bash
 npm install
 npm run dev
 ```
 
-`npm run dev` now does all local setup automatically:
+That's it. It starts a local database, seeds it with test data, and launches everything.
 
-1. clears the local Docker volume so dev starts from a known-good state
-2. starts local Docker Postgres on `127.0.0.1:5433`
-3. waits until the DB accepts connections
-4. applies the local Drizzle-generated schema SQL
-5. seeds local standings/top-scorer/history data
-6. starts the Vercel API layer and Vite frontend
+See `.env.example` for required environment variables.
 
-Useful commands:
-
-- `npm run dev`
-- `npm run dev:db:up`
-- `npm run dev:db:reset`
-- `npm run dev:db:down`
-- `npm run db:migrate:dev`
-- `npm run db:seed:dev`
-- `npm run db:setup:docker`
-
-Local commands:
-
-- `npm run dev` starts the full local stack safely
-- `npm run dev:api` starts the Vercel API layer with `.env.development` forced over shell env
-- `npm run dev:web` starts the Vite frontend manually if needed
-
-## Important files
-
-- [src/data/predictions.ts](/Users/akamf/code/personal/allsvenskan-tipset/src/data/predictions.ts)
-- [src/lib/api-football/client.ts](/Users/akamf/code/personal/allsvenskan-tipset/src/lib/api-football/client.ts)
-- [src/lib/api-football/map-standings.ts](/Users/akamf/code/personal/allsvenskan-tipset/src/lib/api-football/map-standings.ts)
-- [src/lib/api-football/map-topscorers.ts](/Users/akamf/code/personal/allsvenskan-tipset/src/lib/api-football/map-topscorers.ts)
-- [server/api-football/provider.ts](/Users/akamf/code/personal/allsvenskan-tipset/server/api-football/provider.ts)
-- [server/services/live-data.ts](/Users/akamf/code/personal/allsvenskan-tipset/server/services/live-data.ts)
-- [server/services/sync.ts](/Users/akamf/code/personal/allsvenskan-tipset/server/services/sync.ts)
-- [api/cron/sync-standings.ts](/Users/akamf/code/personal/allsvenskan-tipset/api/cron/sync-standings.ts)
-- [drizzle/0000_initial.sql](/Users/akamf/code/personal/allsvenskan-tipset/drizzle/0000_initial.sql)
-
-## Sync flow
-
-`GET /api/cron/sync-standings`
-
-Flow:
-
-1. Validate `CRON_SECRET` from `?secret=` or bearer token.
-2. Fetch standings and top scorers from API-FOOTBALL using the fixed Allsvenskan league id.
-3. Map and normalize the payload.
-4. Start a DB transaction.
-5. Skip writes if the current round already exists.
-6. Insert snapshot headers and rows for a new round.
-7. Compute participant scores from static predictions.
-8. Insert participant score rows.
-9. Commit.
-
-## Runtime flow
-
-- Dashboard standings: live first, DB fallback
-- Dashboard top scorers: live first, DB fallback
-- Leaderboard: computed from current live-or-fallback standings
-- History charts: from `participant_scores` snapshots in DB
-
-## Scripts
-
-```bash
-npm run dev
-npm run dev:api
-npm run dev:web
-npm run dev:db:up
-npm run dev:db:down
-npm run db:migrate:dev
-npm run db:seed:dev
-npm run typecheck
-npm run test
-npm run build
-npm run sync:manual
-```
+</details>
