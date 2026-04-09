@@ -1,12 +1,12 @@
 import { readFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import postgres from 'postgres'
-import { getDatabaseEnv } from '../env.js'
+import { requireLocalDatabase } from './local-db-guard.js'
 
 async function initLocalDb() {
   const sqlFile = resolve(process.cwd(), 'drizzle/0000_initial.sql')
   const migration = await readFile(sqlFile, 'utf8')
-  const sql = postgres(getDatabaseEnv().DATABASE_URL, {
+  const sql = postgres(requireLocalDatabase('init-local-db'), {
     max: 1,
     prepare: false,
   })

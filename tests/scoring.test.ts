@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
-import { findBestPlayerNameMatch, getPlayerMatchScore } from '../src/lib/player-name-match'
-import { computeLeaderboard } from '../server/scoring/leaderboard'
-import { scorePositionDistance } from '../server/scoring/rules'
-import type { NormalizedPrediction, NormalizedStanding, NormalizedTopScorer } from '../server/types'
+import { findBestPlayerNameMatch, getPlayerMatchScore } from '../shared/player-name-match'
+import { computeLeaderboard } from '../server/scoring/leaderboard.js'
+import { scorePositionDistance } from '../server/scoring/rules.js'
+import type { NormalizedPrediction, NormalizedStanding, NormalizedTopScorer } from '../server/types.js'
 
 describe('scorePositionDistance', () => {
   it('scores exact and near hits', () => {

@@ -14,3 +14,7 @@ export async function getPredictionsForSeason(): Promise<NormalizedPrediction[]>
     )
     .sort((a, b) => a.participantName.localeCompare(b.participantName))
 }
+
+export async function listPredictionsForSeason() {
+  return getPredictionsForSeason()
+}

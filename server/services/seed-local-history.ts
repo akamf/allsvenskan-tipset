@@ -11,6 +11,7 @@ import {
 import { getPredictionsForSeason } from '../queries/predictions.js'
 import { computeLeaderboard } from '../scoring/leaderboard.js'
 import type { NormalizedStanding, NormalizedTopScorer } from '../types.js'
+import { requireLocalDatabase } from './local-db-guard.js'
 
 const rounds = [
   {
@@ -185,6 +186,7 @@ function toTopScorerRows(rows: (typeof rounds)[number]['scorers']): NormalizedTo
 }
 
 export async function seedLocalHistory() {
+  requireLocalDatabase('seed-local-history')
   const db = getDb()
   const predictions = await getPredictionsForSeason()
 

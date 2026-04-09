@@ -31,6 +31,7 @@
     "drizzle.config.ts",
     "api/**/*.ts",
     "server/**/*.ts",
+    "shared/**/*.ts",
     "tests/**/*.ts"
   ]
 }

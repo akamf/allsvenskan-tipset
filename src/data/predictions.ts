@@ -1,7 +1,7 @@
 import { z } from 'zod'
-import { CANONICAL_TEAMS } from '../../server/constants.js'
+import { canonicalTeams } from '../../shared/constants.js'
 
-const canonicalTeamSchema = z.enum(CANONICAL_TEAMS)
+const canonicalTeamSchema = z.enum(canonicalTeams)
 
 const predictionSchema = z.object({
   participantId: z.string(),

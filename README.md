@@ -43,7 +43,7 @@ npm run db:docker:up
 npm run db:setup:docker
 ```
 
-This starts a local Postgres container on `127.0.0.1:54329`, applies [drizzle/0000_initial.sql](/Users/akamf/code/personal/allsvenskan-tipset/drizzle/0000_initial.sql), and seeds local standings/top-scorer/history data into that container only.
+This starts a local Postgres container on `127.0.0.1:54329`, applies [drizzle/0000_initial.sql](/Users/akamf/code/personal/allsvenskan-tipset/drizzle/0000_initial.sql), and seeds local standings/top-scorer/history data into that container only. The local init/seed scripts refuse non-local database hosts.
 
 Useful commands:
 
@@ -77,11 +77,11 @@ Local commands:
 Flow:
 
 1. Validate `CRON_SECRET` from `?secret=` or bearer token.
-2. Discover the Allsvenskan league via API-FOOTBALL.
-3. Fetch standings and top scorers.
-4. Map and normalize the payload.
-5. Start a DB transaction.
-6. Insert snapshot headers and rows.
+2. Fetch standings and top scorers from API-FOOTBALL using the fixed Allsvenskan league id.
+3. Map and normalize the payload.
+4. Start a DB transaction.
+5. Skip writes if the current round already exists.
+6. Insert snapshot headers and rows for a new round.
 7. Compute participant scores from static predictions.
 8. Insert participant score rows.
 9. Commit.

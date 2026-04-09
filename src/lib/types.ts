@@ -93,6 +93,7 @@ export const predictionsResponseSchema = z.object({
       participantId: z.string(),
       participantName: z.string(),
       predictedTopScorer: z.string(),
+      livePredictedTopScorerName: z.string().nullable().optional().default(null),
       livePredictedTopScorerGoals: z.number().nullable(),
       predictedRows: z.array(
         z.object({
