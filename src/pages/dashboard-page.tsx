@@ -41,15 +41,32 @@ export function DashboardPage() {
           <h2 className="font-display text-3xl font-semibold tracking-tight text-[#2d3527]">Dashboard</h2>
         </div>
         <div className="inline-flex items-center gap-2 rounded-full border border-[#9d8663]/35 bg-[#f6f0e4] px-3 py-1.5 text-xs font-medium text-[#655640]">
-          <Circle className={`h-2.5 w-2.5 fill-current ${data.status.mode === 'live' ? 'text-[#6f845e]' : 'text-[#9b4e47]'}`} />
+          <Circle
+            className={`h-2.5 w-2.5 fill-current ${data.status.mode === 'live' ? 'text-[#6f845e]' : 'text-[#9b4e47]'}`}
+          />
           {data.status.mode === 'live' ? 'Live' : 'Fallback'}
         </div>
       </div>
 
       <section className="grid gap-4 md:grid-cols-3">
-        <MetricCard label="Current leader" value={data.summary.leaderName ?? 'N/A'} hint="Best current score" icon={ArrowUp} />
-        <MetricCard label="Current loser" value={data.summary.lastPlaceName ?? 'N/A'} hint="Most beer owed" icon={ArrowDown} />
-        <MetricCard label="Current round" value={String(data.summary.currentRound ?? '-')} hint={data.status.source} icon={Siren} />
+        <MetricCard
+          label="Current leader"
+          value={data.summary.leaderName ?? 'N/A'}
+          hint="Best current score"
+          icon={ArrowUp}
+        />
+        <MetricCard
+          label="Current loser"
+          value={data.summary.lastPlaceName ?? 'N/A'}
+          hint="Most beer owed"
+          icon={ArrowDown}
+        />
+        <MetricCard
+          label="Current round"
+          value={String(data.summary.currentRound ?? '-')}
+          hint={data.status.source}
+          icon={Siren}
+        />
       </section>
 
       <section className="grid gap-6 xl:grid-cols-[0.92fr_1.08fr]">
@@ -70,16 +87,19 @@ export function DashboardPage() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {data.leaderboard.map((row) => (
+                  {data.leaderboard.map(row => (
                     <TableRow key={row.participantId}>
                       <TableCell>{row.ranking}</TableCell>
                       <TableCell>
-                        <Link className="font-medium text-white hover:text-[#f0e5d4]" to={`/participants/${row.participantId}`}>
+                        <Link
+                          className="font-medium text-white hover:text-[#f0e5d4]"
+                          to={`/participants/${row.participantId}`}
+                        >
                           {row.participantName}
                         </Link>
                       </TableCell>
                       <TableCell>{row.totalPoints}</TableCell>
-                      <TableCell>{row.beerDebt}</TableCell>
+                      <TableCell>{'🍺'.repeat(Math.max(0, Math.min(row.beerDebt ?? 0, 20)))}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -91,7 +111,7 @@ export function DashboardPage() {
             title="Top scorers"
             description="Current scorer race for the tiebreak."
             headers={['#', 'Player', 'Team', 'Goals']}
-            rows={data.topScorers.map((row) => [row.rank, row.playerName, toDisplayTeamName(row.teamName), row.goals])}
+            rows={data.topScorers.map(row => [row.rank, row.playerName, toDisplayTeamName(row.teamName), row.goals])}
           />
         </div>
 
@@ -128,7 +148,7 @@ export function DashboardPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {data.beerDebtTable.map((row) => (
+                {data.beerDebtTable.map(row => (
                   <TableRow key={row.participantId}>
                     <TableCell>{row.participantName}</TableCell>
                     <TableCell>{row.ranking}</TableCell>
@@ -146,7 +166,7 @@ export function DashboardPage() {
             <CardDescription>Open each participant for team-by-team scoring and tiebreak context.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
-            {data.leaderboard.map((row) => (
+            {data.leaderboard.map(row => (
               <Link
                 key={row.participantId}
                 to={`/participants/${row.participantId}`}
@@ -220,13 +240,13 @@ function DataTableCard({
         <Table>
           <TableHeader>
             <TableRow>
-              {headers.map((header) => (
+              {headers.map(header => (
                 <TableHead key={header}>{header}</TableHead>
               ))}
             </TableRow>
           </TableHeader>
           <TableBody>
-            {rows.map((row) => (
+            {rows.map(row => (
               <TableRow key={row.join('-')}>
                 {row.map((cell, index) => (
                   <TableCell key={`${row.join('-')}-${index}`}>{cell}</TableCell>
@@ -290,7 +310,11 @@ function LiveStandingsCard({
                 <TableCell>
                   <div className="flex items-center gap-2.5">
                     {row.teamLogo ? (
-                      <img alt="" className="h-6 w-6 rounded-full bg-white/5 object-contain" src={row.teamLogo} />
+                      <img
+                        alt=""
+                        className="h-6 w-6 rounded-full bg-white/5 object-contain"
+                        src={row.teamLogo}
+                      />
                     ) : (
                       <div className="h-6 w-6 rounded-full bg-[#f6eee0]/10" />
                     )}
@@ -325,7 +349,10 @@ function DashboardSkeleton() {
     <div className="grid gap-6">
       <div className="grid gap-4 md:grid-cols-3">
         {Array.from({ length: 3 }).map((_, index) => (
-          <Skeleton key={index} className="h-28 bg-[#d9cfbc]" />
+          <Skeleton
+            key={index}
+            className="h-28 bg-[#d9cfbc]"
+          />
         ))}
       </div>
       <Skeleton className="h-[520px] bg-[#d9cfbc]" />

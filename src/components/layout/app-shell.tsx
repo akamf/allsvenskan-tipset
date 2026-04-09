@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils'
 const navigation = [
   { to: '/', label: 'Dashboard', icon: Activity },
   { to: '/predictions', label: 'Predictions', icon: ShieldHalf },
+  { to: '/rules', label: 'Rules', icon: ShieldPlus },
   { to: '/history', label: 'History', icon: ChartNoAxesCombined },
 ]
 
@@ -33,7 +34,7 @@ export function AppShell() {
                     'inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition',
                     isActive
                       ? 'border-[#6f845e] bg-[#6f845e] text-[#f7f0e4]'
-                      : 'border-[#a68d6b]/35 bg-[#f3ecdf] text-[#46513d] hover:bg-[#ebe0cd]',
+                      : 'border-[#a68d6b]/35 bg-[#f3ecdf] text-[#46513d] hover:bg-[#ebe0cd]'
                   )
                 }
               >
@@ -45,19 +46,23 @@ export function AppShell() {
         </header>
         <Outlet />
         <footer className="mt-10 flex flex-col gap-3 border-t border-[#a68d6b]/25 py-5 text-xs text-[#655640] sm:flex-row sm:items-center sm:justify-between">
+          <span className="inline-flex items-center gap-2 font-bold">Powered by API-FOOTBALL</span>
           <span className="inline-flex items-center gap-2">
             <Copyright className="h-3.5 w-3.5" />
             Andreas Kamf
           </span>
-          <span className="inline-flex items-center gap-2">Powered by API-FOOTBALL</span>
           <a
             aria-label="GitHub"
             className="inline-flex items-center text-[#655640] transition hover:text-[#2d3527]"
-            href="https://github.com/akamf"
+            href="https://github.com/akamf/allsvenskan-tipset"
             rel="noreferrer"
             target="_blank"
           >
-            <svg aria-hidden="true" className="h-4 w-4 fill-current" viewBox="0 0 24 24">
+            <svg
+              aria-hidden="true"
+              className="h-4 w-4 fill-current"
+              viewBox="0 0 24 24"
+            >
               <path d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.56v-2.17c-3.2.69-3.88-1.36-3.88-1.36-.52-1.34-1.28-1.7-1.28-1.7-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.68 1.25 3.33.96.1-.74.4-1.25.72-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.25.45-2.27 1.17-3.07-.12-.29-.5-1.46.11-3.04 0 0 .95-.3 3.11 1.17a10.86 10.86 0 0 1 5.66 0c2.16-1.47 3.11-1.17 3.11-1.17.61 1.58.23 2.75.11 3.04.73.8 1.17 1.82 1.17 3.07 0 4.41-2.69 5.38-5.26 5.67.41.35.77 1.05.77 2.12v3.14c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z" />
             </svg>
           </a>

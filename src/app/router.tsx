@@ -5,6 +5,7 @@ import { HistoryPage } from '@/pages/history-page'
 import { NotFoundPage } from '@/pages/not-found-page'
 import { ParticipantPage } from '@/pages/participant-page'
 import { PredictionsPage } from '@/pages/predictions-page'
+import { RulesPage } from '@/pages/rules-page'
 
 export const router = createBrowserRouter([
   {
@@ -13,6 +14,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <DashboardPage /> },
       { path: 'predictions', element: <PredictionsPage /> },
+      { path: 'rules', element: <RulesPage /> },
       { path: 'history', element: <HistoryPage /> },
       { path: 'participants/:participantId', element: <ParticipantPage /> },
       { path: '*', element: <NotFoundPage /> },

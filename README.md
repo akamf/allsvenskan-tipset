@@ -24,6 +24,7 @@ Allsvenskan prediction app built with Vite, React, TypeScript, Tailwind, TanStac
 ```
 
 Development uses `.env.development` and must point at the local Docker database. Production uses Vercel environment variables with `APP_ENV=production`.
+Local `.env` and `.env.local` files are not used and should not exist in the dev workflow.
 The dev scripts use `dotenv-cli` override mode, so `.env.development` wins over any shell-level `DATABASE_URL` or `APP_ENV`.
 
 ```bash
@@ -65,8 +66,7 @@ Local commands:
 
 - `npm run dev` starts the full local stack safely
 - `npm run dev:api` starts the Vercel API layer with `.env.development` forced over shell env
-- `npm run dev:web` starts the Vite frontend
-- `npm run dev:full` starts both API and frontend after setup
+- `npm run dev:web` starts the Vite frontend manually if needed
 
 ## Important files
 
@@ -109,7 +109,6 @@ Flow:
 npm run dev
 npm run dev:api
 npm run dev:web
-npm run dev:full
 npm run dev:db:up
 npm run dev:db:down
 npm run db:migrate:dev
