@@ -38,7 +38,7 @@ export function SeriesChart({
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
-      <CardContent className="h-[320px] pt-2">
+      <CardContent className="h-[260px] pt-2 sm:h-[320px]">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data}>
             <CartesianGrid stroke="rgba(255,255,255,0.08)" strokeDasharray="3 3" />

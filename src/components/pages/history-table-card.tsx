@@ -16,7 +16,7 @@ export function HistoryTableCard({ title, description, headers, rows }: HistoryT
         <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent className="overflow-x-auto">
-        <Table>
+        <Table className="w-max sm:w-full">
           <TableHeader>
             <TableRow>
               {headers.map((header) => (

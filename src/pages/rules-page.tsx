@@ -27,22 +27,22 @@ const beerRules = [
 export function RulesPage() {
   return (
     <div className="space-y-6">
-      <section className="grid gap-5">
+      <section className="grid gap-5 lg:grid-cols-2">
         <RulesCard
           icon={Trophy}
           title="Scoring"
           description="Points for exact hits, near misses, and the bonus rules used in the app."
           items={scoringRules}
         />
-      </section>
-
-      <section className="grid gap-5 lg:grid-cols-2">
         <RulesCard
           icon={Award}
           title="Top scorer tiebreak"
           description="Used whenever two participants have the same total points."
           bullets={tiebreakRules}
         />
+      </section>
+
+      <section className="grid gap-5 lg:grid-cols-2">
         <RulesCard
           icon={Beer}
           title="Beer debt"

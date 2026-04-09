@@ -1,4 +1,5 @@
-import { Activity, ChartNoAxesCombined, Copyright, ShieldHalf, ShieldPlus } from 'lucide-react'
+import { useState } from 'react'
+import { Activity, ChartNoAxesCombined, Copyright, Menu, ShieldHalf, ShieldPlus, X } from 'lucide-react'
 import { NavLink, Outlet } from 'react-router-dom'
 import logoUrl from '@/assets/logo.png'
 import { cn } from '@/lib/utils'
@@ -11,25 +12,39 @@ const navigation = [
 ]
 
 export function AppShell() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
   return (
     <div className="min-h-screen text-foreground">
-      <div className="relative container py-6 sm:py-8">
-        <header className="mb-8 flex flex-col gap-4 rounded-[28px] border border-[#826a4b]/25 bg-[#f6f0e4]/90 px-5 py-4 shadow-[0_16px_40px_rgba(120,101,69,0.08)] sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-center gap-4">
-            <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-2xl border border-[#826a4b]/35 bg-[#f7f0e4]">
-              <img
-                alt="Allsvenskan Tipset logo"
-                className="h-full w-full object-contain p-1"
-                src={logoUrl}
-              />
+      <div className="relative container mx-auto w-full max-w-[calc(100vw-1.5rem)] py-6 sm:py-8">
+        <header className="mb-8 flex flex-col gap-4 rounded-[28px] border border-[#826a4b]/25 bg-[#f6f0e4]/90 px-4 py-4 shadow-[0_16px_40px_rgba(120,101,69,0.08)] sm:flex-row sm:items-center sm:justify-between sm:px-5">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex min-w-0 items-center gap-4">
+              <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-2xl border border-[#826a4b]/35 bg-[#f7f0e4]">
+                <img
+                  alt="Allsvenskan Tipset logo"
+                  className="h-full w-full object-contain p-1"
+                  src={logoUrl}
+                />
+              </div>
+              <div className="min-w-0">
+                <h1 className="font-display text-base font-semibold tracking-[0.12em] text-[#293124] sm:text-2xl">
+                  ALLSVENSKAN BEER BET 2026
+                </h1>
+              </div>
             </div>
-            <div>
-              <h1 className="font-display text-xl font-semibold tracking-[0.12em] text-[#293124] sm:text-2xl">
-                ALLSVENSKAN BEER BET 2026
-              </h1>
-            </div>
+            <button
+              aria-controls="mobile-navigation"
+              aria-expanded={isMobileMenuOpen}
+              aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-[#826a4b]/35 bg-[#f3ecdf] text-[#46513d] transition hover:bg-[#ebe0cd] sm:hidden"
+              onClick={() => setIsMobileMenuOpen((value) => !value)}
+              type="button"
+            >
+              {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </button>
           </div>
-          <nav className="flex flex-wrap gap-2">
+          <nav className="hidden flex-wrap gap-2 sm:flex">
             {navigation.map(({ to, label, icon: Icon }) => (
               <NavLink
                 key={to}
@@ -48,9 +63,34 @@ export function AppShell() {
               </NavLink>
             ))}
           </nav>
+          {isMobileMenuOpen ? (
+            <nav
+              id="mobile-navigation"
+              className="grid gap-2 rounded-[24px] border border-[#826a4b]/20 bg-[#f3ecdf] p-2 shadow-[0_12px_28px_rgba(120,101,69,0.12)] sm:hidden"
+            >
+              {navigation.map(({ to, label, icon: Icon }) => (
+                <NavLink
+                  key={to}
+                  to={to}
+                  className={({ isActive }) =>
+                    cn(
+                      'flex items-center gap-2 rounded-2xl border px-4 py-3 text-sm font-medium transition',
+                      isActive
+                        ? 'border-[#6f845e] bg-[#6f845e] text-[#f7f0e4]'
+                        : 'border-[#a68d6b]/25 bg-[#f7f0e4] text-[#46513d] hover:bg-[#ebe0cd]'
+                    )
+                  }
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <Icon className="h-4 w-4" />
+                  {label}
+                </NavLink>
+              ))}
+            </nav>
+          ) : null}
         </header>
         <Outlet />
-        <footer className="mt-10 flex flex-col gap-3 border-t border-[#a68d6b]/25 py-5 text-xs text-[#655640] sm:flex-row sm:items-center sm:justify-between">
+        <footer className="mt-10 flex flex-col items-center gap-3 border-t border-[#a68d6b]/25 py-5 text-center text-xs text-[#655640] sm:flex-row sm:items-center sm:justify-between sm:text-left">
           <span className="inline-flex items-center gap-2 font-bold">Powered by API-FOOTBALL</span>
           <span className="inline-flex items-center gap-2">
             <Copyright className="h-3.5 w-3.5" />

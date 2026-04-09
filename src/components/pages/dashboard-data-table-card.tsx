@@ -10,13 +10,13 @@ type DashboardDataTableCardProps = {
 
 export function DashboardDataTableCard({ title, description, headers, rows }: DashboardDataTableCardProps) {
   return (
-    <Card className="bg-[#5d7454]">
+    <Card className="min-w-0 bg-[#5d7454]">
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent className="overflow-x-auto">
-        <Table>
+        <Table className="w-max sm:w-full">
           <TableHeader>
             <TableRow>
               {headers.map((header) => (

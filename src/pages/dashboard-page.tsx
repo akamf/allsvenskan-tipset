@@ -38,10 +38,9 @@ export function DashboardPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <h2 className="font-display text-3xl font-semibold tracking-tight text-[#2d3527]">Dashboard</h2>
-        </div>
+      <div className="flex items-center justify-between">
+        <h2 className="font-display text-2xl font-semibold tracking-tight text-[#2d3527] sm:text-3xl">Dashboard</h2>
+
         <div className="inline-flex items-center gap-2 rounded-full border border-[#9d8663]/35 bg-[#f6f0e4] px-3 py-1.5 text-xs font-medium text-[#655640]">
           <Circle
             className={`h-2.5 w-2.5 fill-current ${data.status.mode === 'live' ? 'text-[#6f845e]' : 'text-[#9b4e47]'}`}
@@ -73,13 +72,13 @@ export function DashboardPage() {
 
       <section className="grid gap-6 xl:grid-cols-[0.92fr_1.08fr]">
         <div className="grid gap-6">
-          <Card className="bg-[#586f50]">
+          <Card className="min-w-0 bg-[#586f50]">
             <CardHeader>
               <CardTitle>Leaderboard</CardTitle>
               <CardDescription>Current standings between the five participants.</CardDescription>
             </CardHeader>
-            <CardContent>
-              <Table>
+            <CardContent className="overflow-x-auto">
+              <Table className="w-max sm:w-full">
                 <TableHeader>
                   <TableRow>
                     <TableHead>Rank</TableHead>
@@ -135,13 +134,13 @@ export function DashboardPage() {
       </section>
 
       <section className="grid gap-6 xl:grid-cols-2">
-        <Card className="bg-[#5a7051]">
+        <Card className="min-w-0 bg-[#5a7051]">
           <CardHeader>
             <CardTitle>Beer debt table</CardTitle>
             <CardDescription>Current rounds owed based on the latest rankings.</CardDescription>
           </CardHeader>
-          <CardContent>
-            <Table>
+          <CardContent className="overflow-x-auto">
+            <Table className="w-max sm:w-full">
               <TableHeader>
                 <TableRow>
                   <TableHead>Participant</TableHead>
@@ -162,7 +161,7 @@ export function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card className="bg-[#607656]">
+        <Card className="min-w-0 bg-[#607656]">
           <CardHeader>
             <CardTitle>Prediction drill-down</CardTitle>
             <CardDescription>Open each participant for team-by-team scoring and tiebreak context.</CardDescription>
@@ -172,7 +171,7 @@ export function DashboardPage() {
               <Link
                 key={row.participantId}
                 to={`/participants/${row.participantId}`}
-                className="flex items-center justify-between rounded-2xl border border-[#ecdcc7]/10 bg-[#f6eee0]/[0.06] px-4 py-3 transition hover:bg-[#f6eee0]/[0.1]"
+                className="flex flex-col gap-3 rounded-2xl border border-[#ecdcc7]/10 bg-[#f6eee0]/[0.06] px-4 py-3 transition hover:bg-[#f6eee0]/[0.1] sm:flex-row sm:items-center sm:justify-between"
               >
                 <div>
                   <p className="font-medium text-white">{row.participantName}</p>

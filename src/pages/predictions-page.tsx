@@ -38,8 +38,8 @@ export function PredictionsPage() {
                 {liveMatch ? ` (${liveMatch.goals} goals)` : ''}
               </CardDescription>
             </CardHeader>
-            <CardContent className="px-4 pb-4 pt-0">
-              <Table>
+            <CardContent className="overflow-x-auto px-4 pb-4 pt-0">
+              <Table className="w-max sm:w-full">
                 <TableHeader>
                   <TableRow>
                     <TableHead>#</TableHead>

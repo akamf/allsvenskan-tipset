@@ -56,7 +56,7 @@ export function ParticipantPage() {
           <CardDescription>How the latest standings translate into points for this participant.</CardDescription>
         </CardHeader>
         <CardContent className="overflow-x-auto">
-          <Table>
+          <Table className="w-max sm:w-full">
             <TableHeader>
               <TableRow>
                 <TableHead>Team</TableHead>

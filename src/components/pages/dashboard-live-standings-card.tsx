@@ -25,13 +25,13 @@ type DashboardLiveStandingsCardProps = {
 
 export function DashboardLiveStandingsCard({ standings }: DashboardLiveStandingsCardProps) {
   return (
-    <Card className="bg-[#566c4e]">
+    <Card className="min-w-0 bg-[#566c4e]">
       <CardHeader>
         <CardTitle>Live Allsvenskan table</CardTitle>
         <CardDescription>Current standings.</CardDescription>
       </CardHeader>
-      <CardContent>
-        <Table>
+      <CardContent className="overflow-x-auto">
+        <Table className="w-max sm:w-full">
           <TableHeader>
             <TableRow>
               <TableHead>#</TableHead>

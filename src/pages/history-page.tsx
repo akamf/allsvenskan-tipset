@@ -49,10 +49,25 @@ export function HistoryPage() {
       </Card>
 
       <Tabs defaultValue="standings">
-        <TabsList>
-          <TabsTrigger value="standings">Standings</TabsTrigger>
-          <TabsTrigger value="scorers">Top scorers</TabsTrigger>
-          <TabsTrigger value="charts">Progression</TabsTrigger>
+        <TabsList className="flex w-full overflow-x-auto sm:w-auto">
+          <TabsTrigger
+            className="shrink-0 px-3 py-2 text-xs sm:px-4 sm:py-2 sm:text-sm"
+            value="standings"
+          >
+            Standings
+          </TabsTrigger>
+          <TabsTrigger
+            className="shrink-0 px-3 py-2 text-xs sm:px-4 sm:py-2 sm:text-sm"
+            value="scorers"
+          >
+            Top scorers
+          </TabsTrigger>
+          <TabsTrigger
+            className="shrink-0 px-3 py-2 text-xs sm:px-4 sm:py-2 sm:text-sm"
+            value="charts"
+          >
+            Progression
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="standings">
