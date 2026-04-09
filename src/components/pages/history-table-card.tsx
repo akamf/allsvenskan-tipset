@@ -1,0 +1,40 @@
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+
+type HistoryTableCardProps = {
+  title: string
+  description: string
+  headers: string[]
+  rows: Array<Array<string | number>>
+}
+
+export function HistoryTableCard({ title, description, headers, rows }: HistoryTableCardProps) {
+  return (
+    <Card className="bg-[#5e7453]">
+      <CardHeader>
+        <CardTitle>{title}</CardTitle>
+        <CardDescription>{description}</CardDescription>
+      </CardHeader>
+      <CardContent className="overflow-x-auto">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              {headers.map((header) => (
+                <TableHead key={header}>{header}</TableHead>
+              ))}
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {rows.map((row) => (
+              <TableRow key={row.join('-')}>
+                {row.map((cell, index) => (
+                  <TableCell key={`${row.join('-')}-${index}`}>{cell}</TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </CardContent>
+    </Card>
+  )
+}

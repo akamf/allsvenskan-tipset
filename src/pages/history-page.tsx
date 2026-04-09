@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { SeriesChart } from '@/components/dashboard/series-chart'
+import { HistoryTableCard } from '@/components/pages/history-table-card'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { api, ApiError } from '@/lib/api'
 import { formatDateTime } from '@/lib/format'
@@ -86,46 +86,5 @@ export function HistoryPage() {
         </TabsContent>
       </Tabs>
     </div>
-  )
-}
-
-function HistoryTableCard({
-  title,
-  description,
-  headers,
-  rows,
-}: {
-  title: string
-  description: string
-  headers: string[]
-  rows: Array<Array<string | number>>
-}) {
-  return (
-    <Card className="bg-[#5e7453]">
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
-      </CardHeader>
-      <CardContent className="overflow-x-auto">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              {headers.map((header) => (
-                <TableHead key={header}>{header}</TableHead>
-              ))}
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {rows.map((row) => (
-              <TableRow key={row.join('-')}>
-                {row.map((cell, index) => (
-                  <TableCell key={`${row.join('-')}-${index}`}>{cell}</TableCell>
-                ))}
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </CardContent>
-    </Card>
   )
 }
