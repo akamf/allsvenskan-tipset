@@ -22,7 +22,7 @@ export const dashboardMetadata = {
   cronFlow: [
     'Vercel cron hits /api/cron/sync-standings with CRON_SECRET protection',
     'the sync fetches live standings and top scorers in one transaction boundary',
-    'fresh snapshots are written once per round and participant scores are computed immediately',
-    'if API data is malformed or the round already exists, the sync exits safely',
+    'fresh snapshots replace the previous round bundle and participant scores are computed immediately',
+    'if API data is malformed, the sync exits safely',
   ],
 } as const

@@ -25,6 +25,16 @@ export async function findExistingRoundSnapshot(tx: {
   })
 }
 
+export async function replaceExistingRoundSnapshotBundle(
+  tx: {
+    delete: DbTransaction['delete']
+  },
+  roundNumber: number,
+) {
+  await tx.delete(topScorerSnapshots).where(and(eq(topScorerSnapshots.season, APP_SEASON), eq(topScorerSnapshots.roundNumber, roundNumber)))
+  await tx.delete(standingsSnapshots).where(and(eq(standingsSnapshots.season, APP_SEASON), eq(standingsSnapshots.roundNumber, roundNumber)))
+}
+
 export async function insertSnapshotBundle(
   tx: DbTransaction,
   live: LiveBundle,

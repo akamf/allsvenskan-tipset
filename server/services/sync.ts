@@ -2,7 +2,7 @@ import { getDb } from '../db/client.js'
 import { getPredictionsForSeason } from '../queries/predictions.js'
 import { computeLeaderboard } from '../scoring/leaderboard.js'
 import { fetchLiveStandingsAndTopScorers } from '../api-football/provider.js'
-import { findExistingRoundSnapshot, insertSnapshotBundle } from './sync-helpers.js'
+import { findExistingRoundSnapshot, insertSnapshotBundle, replaceExistingRoundSnapshotBundle } from './sync-helpers.js'
 
 export async function runNightlySync() {
   const db = getDb()
@@ -12,18 +12,13 @@ export async function runNightlySync() {
   return db.transaction(async (tx) => {
     const existingStandings = await findExistingRoundSnapshot(tx, live.roundNumber)
 
-    if (existingStandings) {
-      return {
-        inserted: false,
-        roundNumber: live.roundNumber,
-        standingsSnapshotId: existingStandings.id,
-      }
-    }
+    await replaceExistingRoundSnapshotBundle(tx, live.roundNumber)
 
     const standingsSnapshotId = await insertSnapshotBundle(tx, live, leaderboard)
 
     return {
       inserted: true,
+      replaced: Boolean(existingStandings),
       roundNumber: live.roundNumber,
       standingsSnapshotId,
     }
