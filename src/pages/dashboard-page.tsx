@@ -14,7 +14,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { api, ApiError } from '@/lib/api'
 import { toPredictedScorerDisplayName } from '@/lib/predicted-scorers'
 import { toDisplayTeamName } from '@/lib/team-display'
-import { buildRotatingWhatsAppRoundSummary, buildWhatsAppShareUrl } from '@/lib/whatsapp-share'
+import { buildRandomWhatsAppRoundSummary, buildWhatsAppShareUrl } from '@/lib/whatsapp-share'
 
 export function DashboardPage() {
   const [copyLabel, setCopyLabel] = useState('Copy summary')
@@ -43,7 +43,7 @@ export function DashboardPage() {
   const dashboardData = data
 
   function handleShareOnWhatsApp() {
-    const shareMessage = buildRotatingWhatsAppRoundSummary(dashboardData)
+    const shareMessage = buildRandomWhatsAppRoundSummary(dashboardData)
     const shareUrl = buildWhatsAppShareUrl(shareMessage)
     window.location.href = shareUrl
   }
@@ -54,7 +54,7 @@ export function DashboardPage() {
     }
 
     try {
-      const shareMessage = buildRotatingWhatsAppRoundSummary(dashboardData)
+      const shareMessage = buildRandomWhatsAppRoundSummary(dashboardData)
       await navigator.clipboard.writeText(shareMessage)
       setCopyLabel('Copied')
       window.setTimeout(() => setCopyLabel('Copy summary'), 1500)
