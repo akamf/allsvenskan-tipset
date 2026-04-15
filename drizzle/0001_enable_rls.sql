@@ -1,0 +1,5 @@
+ALTER TABLE "standings_snapshots" ENABLE ROW LEVEL SECURITY;
+ALTER TABLE "standings_snapshot_rows" ENABLE ROW LEVEL SECURITY;
+ALTER TABLE "top_scorer_snapshots" ENABLE ROW LEVEL SECURITY;
+ALTER TABLE "top_scorer_snapshot_rows" ENABLE ROW LEVEL SECURITY;
+ALTER TABLE "participant_scores" ENABLE ROW LEVEL SECURITY;

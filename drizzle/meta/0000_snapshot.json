@@ -158,7 +158,7 @@
       "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
-      "isRLSEnabled": false
+      "isRLSEnabled": true
     },
     "public.standings_snapshot_rows": {
       "name": "standings_snapshot_rows",
@@ -280,7 +280,7 @@
       "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
-      "isRLSEnabled": false
+      "isRLSEnabled": true
     },
     "public.standings_snapshots": {
       "name": "standings_snapshots",
@@ -380,7 +380,7 @@
       "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
-      "isRLSEnabled": false
+      "isRLSEnabled": true
     },
     "public.top_scorer_snapshot_rows": {
       "name": "top_scorer_snapshot_rows",
@@ -466,7 +466,7 @@
       "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
-      "isRLSEnabled": false
+      "isRLSEnabled": true
     },
     "public.top_scorer_snapshots": {
       "name": "top_scorer_snapshots",
@@ -566,7 +566,7 @@
       "uniqueConstraints": {},
       "policies": {},
       "checkConstraints": {},
-      "isRLSEnabled": false
+      "isRLSEnabled": true
     }
   },
   "enums": {},
