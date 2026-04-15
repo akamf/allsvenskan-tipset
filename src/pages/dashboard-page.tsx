@@ -1,5 +1,6 @@
+import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import { ArrowDown, ArrowUp, Circle, Siren } from 'lucide-react'
+import { ArrowDown, ArrowUp, Circle, Copy, MessageCircleMore, Siren } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { DashboardDataTableCard } from '@/components/pages/dashboard-data-table-card'
 import { DashboardLiveStandingsCard } from '@/components/pages/dashboard-live-standings-card'
@@ -7,13 +8,16 @@ import { DashboardMetricCard } from '@/components/pages/dashboard-metric-card'
 import { DashboardSkeleton } from '@/components/pages/dashboard-skeleton'
 import { SeriesChart } from '@/components/dashboard/series-chart'
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { api, ApiError } from '@/lib/api'
 import { toPredictedScorerDisplayName } from '@/lib/predicted-scorers'
 import { toDisplayTeamName } from '@/lib/team-display'
+import { buildRotatingWhatsAppRoundSummary, buildWhatsAppShareUrl } from '@/lib/whatsapp-share'
 
 export function DashboardPage() {
+  const [copyLabel, setCopyLabel] = useState('Copy summary')
   const { data, isLoading, error } = useQuery({
     queryKey: ['dashboard'],
     queryFn: api.dashboard,
@@ -36,36 +40,81 @@ export function DashboardPage() {
     )
   }
 
+  const dashboardData = data
+
+  function handleShareOnWhatsApp() {
+    const shareMessage = buildRotatingWhatsAppRoundSummary(dashboardData)
+    const shareUrl = buildWhatsAppShareUrl(shareMessage)
+    window.location.href = shareUrl
+  }
+
+  async function handleCopySummary() {
+    if (!navigator.clipboard?.writeText) {
+      return
+    }
+
+    try {
+      const shareMessage = buildRotatingWhatsAppRoundSummary(dashboardData)
+      await navigator.clipboard.writeText(shareMessage)
+      setCopyLabel('Copied')
+      window.setTimeout(() => setCopyLabel('Copy summary'), 1500)
+    } catch {
+      // Clipboard access is optional; keep the UI quiet if the browser blocks it.
+    }
+  }
+
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h2 className="font-display text-2xl font-semibold tracking-tight text-[#2d3527] sm:text-3xl">Dashboard</h2>
 
-        <div className="inline-flex items-center gap-2 rounded-full border border-[#9d8663]/35 bg-[#f6f0e4] px-3 py-1.5 text-xs font-medium text-[#655640]">
-          <Circle
-            className={`h-2.5 w-2.5 fill-current ${data.status.mode === 'live' ? 'text-[#6f845e]' : 'text-[#9b4e47]'}`}
-          />
-          {data.status.mode === 'live' ? 'Live' : 'Fallback'}
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#9d8663]/35 bg-[#f6f0e4] px-3 py-1.5 text-xs font-medium text-[#655640]">
+            <Circle
+              className={`h-2.5 w-2.5 fill-current ${data.status.mode === 'live' ? 'text-[#6f845e]' : 'text-[#9b4e47]'}`}
+            />
+          {dashboardData.status.mode === 'live' ? 'Live' : 'Fallback'}
+          </div>
+
+          <Button
+            size="sm"
+            variant="outline"
+            className="border-[#9d8663]/35 bg-[#f6f0e4] text-[#655640] hover:bg-[#efe4d0]"
+            onClick={handleShareOnWhatsApp}
+          >
+            <MessageCircleMore className="h-4 w-4" />
+            Share on WhatsApp
+          </Button>
+
+          <Button
+            size="sm"
+            variant="outline"
+            className="border-[#9d8663]/35 bg-[#f6f0e4] text-[#655640] hover:bg-[#efe4d0]"
+            onClick={handleCopySummary}
+          >
+            <Copy className="h-4 w-4" />
+            {copyLabel}
+          </Button>
         </div>
       </div>
 
       <section className="grid gap-4 md:grid-cols-3">
         <DashboardMetricCard
           label="Current leader"
-          value={data.summary.leaderName ?? 'N/A'}
+        value={dashboardData.summary.leaderName ?? 'N/A'}
           hint="Best current score"
           icon={ArrowUp}
         />
         <DashboardMetricCard
           label="Current loser"
-          value={data.summary.lastPlaceName ?? 'N/A'}
+        value={dashboardData.summary.lastPlaceName ?? 'N/A'}
           hint="Most beer owed"
           icon={ArrowDown}
         />
         <DashboardMetricCard
           label="Current round"
-          value={String(data.summary.currentRound ?? '-')}
-          hint={data.status.source}
+        value={String(dashboardData.summary.currentRound ?? '-')}
+        hint={dashboardData.status.source}
           icon={Siren}
         />
       </section>
@@ -88,7 +137,7 @@ export function DashboardPage() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {data.leaderboard.map(row => (
+                  {dashboardData.leaderboard.map(row => (
                     <TableRow key={row.participantId}>
                       <TableCell>{row.ranking}</TableCell>
                       <TableCell>
@@ -112,24 +161,24 @@ export function DashboardPage() {
             title="Top scorers"
             description="Current scorer race for the tiebreak."
             headers={['#', 'Player', 'Team', 'Goals']}
-            rows={data.topScorers.map(row => [row.rank, row.playerName, toDisplayTeamName(row.teamName), row.goals])}
+            rows={dashboardData.topScorers.map(row => [row.rank, row.playerName, toDisplayTeamName(row.teamName), row.goals])}
           />
         </div>
 
-        <DashboardLiveStandingsCard standings={data.standings} />
+        <DashboardLiveStandingsCard standings={dashboardData.standings} />
       </section>
 
       <section className="grid gap-6 xl:grid-cols-2">
         <SeriesChart
           title="Ranking over time"
           description="Lower is better. Historical ranking per snapshot."
-          data={data.charts.rankings}
+          data={dashboardData.charts.rankings}
           invertYAxis
         />
         <SeriesChart
           title="Points over time"
           description="Total points progression per snapshot."
-          data={data.charts.points}
+          data={dashboardData.charts.points}
         />
       </section>
 
@@ -149,7 +198,7 @@ export function DashboardPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {data.beerDebtTable.map(row => (
+                {dashboardData.beerDebtTable.map(row => (
                   <TableRow key={row.participantId}>
                     <TableCell>{row.participantName}</TableCell>
                     <TableCell>{row.ranking}</TableCell>
@@ -167,7 +216,7 @@ export function DashboardPage() {
             <CardDescription>Open each participant for team-by-team scoring and tiebreak context.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
-            {data.leaderboard.map(row => (
+            {dashboardData.leaderboard.map(row => (
               <Link
                 key={row.participantId}
                 to={`/participants/${row.participantId}`}
