@@ -1,4 +1,4 @@
-import { asc, eq } from 'drizzle-orm'
+import { and, asc, desc, eq, lt } from 'drizzle-orm'
 import { APP_SEASON } from '../constants.js'
 import { getDb } from '../db/client.js'
 import {
@@ -14,6 +14,25 @@ export async function getLatestStandingsSnapshot() {
   const snapshot = await db.query.standingsSnapshots.findFirst({
     where: eq(standingsSnapshots.season, APP_SEASON),
     orderBy: (table, { desc }) => [desc(table.roundNumber)],
+  })
+
+  if (!snapshot) {
+    return null
+  }
+
+  const rows = await db.query.standingsSnapshotRows.findMany({
+    where: eq(standingsSnapshotRows.snapshotId, snapshot.id),
+    orderBy: (table, { asc }) => [asc(table.position)],
+  })
+
+  return { snapshot, rows }
+}
+
+export async function getLatestStandingsSnapshotBeforeRound(roundNumber: number) {
+  const db = getDb()
+  const snapshot = await db.query.standingsSnapshots.findFirst({
+    where: and(eq(standingsSnapshots.season, APP_SEASON), lt(standingsSnapshots.roundNumber, roundNumber)),
+    orderBy: (table) => [desc(table.roundNumber)],
   })
 
   if (!snapshot) {

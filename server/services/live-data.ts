@@ -1,7 +1,20 @@
 import type { LiveBundle } from '../api-football/provider.js'
-import { getLatestStandingsSnapshot, getLatestTopScorerSnapshot } from '../queries/snapshots.js'
+import {
+  getLatestStandingsSnapshot,
+  getLatestStandingsSnapshotBeforeRound,
+  getLatestTopScorerSnapshot,
+} from '../queries/snapshots.js'
 import { fetchLiveStandingsAndTopScorers } from '../api-football/provider.js'
 import { liveStandingRowSchema, normalizedStandingSchema, normalizedTopScorerSchema } from '../types.js'
+import { attachPositionMovement } from './standings-form.js'
+
+type LiveStandingRowWithMovement = LiveBundle['liveStandings'][number] & {
+  form: string | null
+}
+
+type LiveBundleWithMovement = Omit<LiveBundle, 'liveStandings'> & {
+  liveStandings: LiveStandingRowWithMovement[]
+}
 
 export type LiveBundleResult = {
   status: {
@@ -12,7 +25,7 @@ export type LiveBundleResult = {
     roundNumber: number | null
     source: string
   }
-  payload: LiveBundle
+  payload: LiveBundleWithMovement
 }
 
 export async function getLiveBundleWithFallback(): Promise<LiveBundleResult> {
@@ -20,6 +33,11 @@ export async function getLiveBundleWithFallback(): Promise<LiveBundleResult> {
     console.info('[live-data] API-FOOTBALL call started')
     const live = await fetchLiveStandingsAndTopScorers()
     console.info('[live-data] API-FOOTBALL success')
+    const previousSnapshot = await getLatestStandingsSnapshotBeforeRound(live.roundNumber).catch((error) => {
+      console.warn('[live-data] previous snapshot lookup failed for live data', error)
+      return null
+    })
+    const liveStandings = attachPositionMovement(live.liveStandings, previousSnapshot?.rows ?? null)
 
     return {
       status: {
@@ -30,7 +48,10 @@ export async function getLiveBundleWithFallback(): Promise<LiveBundleResult> {
         roundNumber: live.roundNumber,
         source: 'API-FOOTBALL live',
       },
-      payload: live,
+      payload: {
+        ...live,
+        liveStandings,
+      },
     }
   } catch (error) {
     console.error('[live-data] API-FOOTBALL failure', error)
@@ -45,6 +66,12 @@ export async function getLiveBundleWithFallback(): Promise<LiveBundleResult> {
       console.error('[live-data] DB fallback failure: no standings snapshot found')
       throw new Error('No standings data available. Sync the database first.')
     }
+
+    const previousSnapshot = await getLatestStandingsSnapshotBeforeRound(standingsSnapshot.snapshot.roundNumber).catch((lookupError) => {
+      console.warn('[live-data] previous snapshot lookup failed for fallback data', lookupError)
+      return null
+    })
+    const liveStandings = attachPositionMovement(standingsSnapshot.rows, previousSnapshot?.rows ?? null)
 
     console.info('[live-data] DB fallback success')
 
@@ -62,7 +89,7 @@ export async function getLiveBundleWithFallback(): Promise<LiveBundleResult> {
         source: standingsSnapshot.snapshot.source,
         capturedAt: standingsSnapshot.snapshot.capturedAt.toISOString(),
         roundNumber: standingsSnapshot.snapshot.roundNumber,
-        liveStandings: standingsSnapshot.rows.map((row) =>
+        liveStandings: liveStandings.map((row) =>
           liveStandingRowSchema.parse({
             teamId: 0,
             teamName: row.teamName,
@@ -76,7 +103,7 @@ export async function getLiveBundleWithFallback(): Promise<LiveBundleResult> {
             goalsAgainst: row.goalsAgainst,
             goalDifference: row.goalDifference,
             points: row.points,
-            form: null,
+            form: row.form,
             status: null,
             description: null,
             updatedAt: standingsSnapshot.snapshot.capturedAt.toISOString(),
